@@ -1,0 +1,30 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug xUnit Tests",
+            "type": "clr",
+            "request": "launch",
+            "program": "C:/Program Files/Microsoft Visual Studio/2022/Professional/Common7/IDE/Extensions/TestPlatform/vstest.console.exe",
+            "args": [
+                "${workspaceFolder}/tests/bin/Debug/net472/ProcessManager.UnitTests.dll"
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "logging": {
+                "moduleLoad": false
+            },
+            "internalConsoleOptions": "openOnSessionStart",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/source": "${workspaceFolder}"
+            }
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+<ns0:Root xmlns:ns0="http://BizTalk_Server_Project1.SchemaUser">
+  <UserDetails>
+    <Age>70</Age>
+    <Name>UserName</Name>
+    <zipCode>98053</zipCode>
+  </UserDetails>
+  <Status>
+    <Gold>false</Gold>
+    <Discount>0</Discount>
+  </Status>
+</ns0:Root>

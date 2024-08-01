@@ -1,0 +1,63 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Call_a_local_rules_function_in_this_logic_app": {
+                "type": "InvokeFunction",
+                "inputs": {
+                    "functionName": "RunRules",
+                    "parameters": {
+                        "ruleSetName": "GatekeeperRuleSet",
+                        "documentType": "MvcFormsRequestOrResponse",
+                        "inputXml": "@{triggerBody()?['contentData']}",
+                        "purchaseAmount": 1100,
+                        "zipCode": "98052"
+                    }
+                },
+                "runAfter": {}
+            },
+            "Send_message": {
+                "type": "ServiceProvider",
+                "inputs": {
+                    "parameters": {
+                        "entityName": "sbt-intg-procman-dev-outbox",
+                        "message": {
+                            "contentData": "@body('Call_a_local_rules_function_in_this_logic_app')"
+                        }
+                    },
+                    "serviceProviderConfiguration": {
+                        "connectionName": "serviceBus",
+                        "operationId": "sendMessage",
+                        "serviceProviderId": "/serviceProviders/serviceBus"
+                    }
+                },
+                "runAfter": {
+                    "Call_a_local_rules_function_in_this_logic_app": [
+                        "SUCCEEDED"
+                    ]
+                }
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "triggers": {
+            "When_messages_are_available_in_a_topic": {
+                "type": "ServiceProvider",
+                "inputs": {
+                    "parameters": {
+                        "topicName": "sbt-intg-procman-dev-inbox",
+                        "subscriptionName": "sbs-intg-procman-dev-inbox",
+                        "isSessionsEnabled": false
+                    },
+                    "serviceProviderConfiguration": {
+                        "connectionName": "serviceBus",
+                        "operationId": "receiveTopicMessages",
+                        "serviceProviderId": "/serviceProviders/serviceBus"
+                    }
+                },
+                "splitOn": "@triggerOutputs()?['body']"
+            }
+        }
+    },
+    "kind": "Stateful"
+}
